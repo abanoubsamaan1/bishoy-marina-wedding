@@ -19,8 +19,9 @@
 
     <!-- Social sharing (Open Graph) — absolute HTTPS URLs, never /public/… and
          never relative, so WhatsApp / Facebook / Messenger / Telegram / X can
-         fetch the preview image. Swap the file extension below only if the
-         source file in public/images/ is actually re-exported as a JPEG. -->
+         fetch the preview image. The optimized JPEG is the shared preview;
+         the original invitation-preview.png is kept in public/images/ as a
+         fallback. og:image:width/height describe the declared 1200x630 card. -->
     <link rel="canonical" href="https://bishoymarina-wedding.netlify.app/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bishoymarina-wedding.netlify.app/" />
@@ -29,11 +30,15 @@
     <meta property="og:site_name" content="Bishoy &amp; Marina" />
     <meta
       property="og:image"
-      content="https://bishoymarina-wedding.netlify.app/images/invitation-preview.png"
+      content="https://bishoy-marina-wedding.abanoubsamaan123.workers.dev/images/invitation-preview-optimized.jpg"
     />
-    <meta property="og:image:width" content="1734" />
-    <meta property="og:image:height" content="907" />
-    <meta property="og:image:type" content="image/png" />
+    <meta
+      property="og:image:secure_url"
+      content="https://bishoy-marina-wedding.abanoubsamaan123.workers.dev/images/invitation-preview-optimized.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content="Bishoy and Marina — Wedding Invitation, October 18, 2026" />
     <meta property="og:locale" content="en_US" />
 
@@ -43,7 +48,7 @@
     <meta name="twitter:description" content="Wedding Invitation • October 18, 2026" />
     <meta
       name="twitter:image"
-      content="https://bishoymarina-wedding.netlify.app/images/invitation-preview.png"
+      content="https://bishoy-marina-wedding.abanoubsamaan123.workers.dev/images/invitation-preview-optimized.jpg"
     />
     <meta name="twitter:image:alt" content="Bishoy and Marina — Wedding Invitation, October 18, 2026" />
 
