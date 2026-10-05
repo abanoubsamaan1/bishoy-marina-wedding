@@ -4,6 +4,10 @@ node_modules/
 # production build output
 dist/
 
+# Cloudflare Wrangler generated files
+.wrangler
+.dev.vars*
+
 # local environment / secrets — never commit these
 .env
 .env.*
