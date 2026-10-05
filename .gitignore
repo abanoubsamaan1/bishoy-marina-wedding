@@ -1,0 +1,14 @@
+# dependencies
+node_modules/
+
+# production build output
+dist/
+
+# local environment / secrets — never commit these
+.env
+.env.*
+!.env.example
+
+# OS cruft
+.DS_Store
+Thumbs.db
