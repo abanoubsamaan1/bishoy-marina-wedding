@@ -8,8 +8,8 @@
 const IDLE_RESUME_MS = 2500; // ~2–3s of stillness before the film drifts on
 const EASE_IN_MS = 1800; // gentle acceleration when the drift starts
 const END_FADE_VH = 0.7; // soften the approach to the very end of the page
-const MIN_SPEED_VH = 0.135; // mobile: viewport heights per second (phones stay gentler)
-const MAX_SPEED_VH = 0.175; // desktop
+const MIN_SPEED_VH = 0.20; // mobile: viewport heights per second (faster)
+const MAX_SPEED_VH = 0.25; // desktop: viewport heights per second (faster)
 
 const SCROLL_KEYS = new Set([
   "ArrowUp",

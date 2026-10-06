@@ -88,7 +88,7 @@ export function GuestMessages() {
 
   useEffect(() => {
     if (fresh.size === 0) return;
-    const t = window.setTimeout(() => setFresh(new Set()), 9000);
+    const t = window.setTimeout(() => setFresh(new Set()), 3000);
     return () => window.clearTimeout(t);
   }, [fresh]);
 
@@ -165,7 +165,7 @@ export function GuestMessages() {
         setMessage("");
         setTouched(false);
         setNotice(true);
-        window.setTimeout(() => setNotice(false), 5200);
+        window.setTimeout(() => setNotice(false), 3000);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Your message could not be saved. Please try again.");
       } finally {
