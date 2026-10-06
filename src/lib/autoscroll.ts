@@ -77,9 +77,10 @@ class AutoScrollEngine {
   private get speed() {
     const vh = window.innerHeight || 1;
     const w = window.innerWidth || 1;
-    // a phone gets a slightly gentler drift so nothing whips past
+    const prefersReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const perVh = w < 640 ? MIN_SPEED_VH : MAX_SPEED_VH;
-    return vh * perVh;
+    // If user prefers reduced motion, use a very gentle speed instead of blocking
+    return vh * (prefersReduced ? Math.min(perVh, 0.05) : perVh);
   }
 
   private get maxScroll() {
@@ -89,7 +90,6 @@ class AutoScrollEngine {
   /** Starts the drift and installs every listener it needs. */
   start() {
     if (typeof window === "undefined" || this.running) return;
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     this.running = true;
     this.userHold = false;
     this.pos = window.scrollY;
@@ -97,13 +97,22 @@ class AutoScrollEngine {
     this.startedAt = performance.now();
     this.last = this.startedAt;
 
+    // Core listeners (wheel, keyboard, visibility, resize) — always immediate
     window.addEventListener("wheel", this.interrupt, { passive: true });
-    window.addEventListener("touchstart", this.interrupt, { passive: true, capture: true });
-    window.addEventListener("touchmove", this.interrupt, { passive: true, capture: true });
     window.addEventListener("keydown", this.onKey, { passive: true, capture: true });
-    window.addEventListener("pointerdown", this.onPointer, { passive: true, capture: true });
     document.addEventListener("visibilitychange", this.onVisibility);
     window.addEventListener("resize", this.onResize);
+
+    // Touch/pointer listeners — delay on Safari to avoid synthetic events during page load
+    // Safari fires touchstart/touchmove/pointerdown during initial load which would
+    // immediately call interrupt() and prevent auto-scroll from ever starting.
+    const attachTouchListeners = () => {
+      window.addEventListener("touchstart", this.interrupt, { passive: true, capture: true });
+      window.addEventListener("touchmove", this.interrupt, { passive: true, capture: true });
+      window.addEventListener("pointerdown", this.onPointer, { passive: true, capture: true });
+    };
+    // Brief delay lets Safari's synthetic page-load events pass
+    window.setTimeout(attachTouchListeners, 200);
 
     this.emit({ atEnd: this.pos >= this.maxScroll - 2, held: false });
     this.startLoop();
