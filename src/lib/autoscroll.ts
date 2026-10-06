@@ -165,7 +165,7 @@ class AutoScrollEngine {
       }
       // ease in at the start, ease out at the very end of the film
       const rise = Math.min(1, (now - this.startedAt) / EASE_IN_MS);
-      const easeIn = rise * rise * (3 - 2 * rise);
+      const easeIn = Math.max(0.12, rise * rise * (3 - 2 * rise));
       const left = max - this.pos;
       const tail = Math.min(1, left / (window.innerHeight * END_FADE_VH));
       const easeOut = tail * tail * (3 - 2 * tail);
